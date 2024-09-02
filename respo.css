@@ -1,0 +1,68 @@
+body{
+    background-color: turquoise;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  animation-name: example;
+  animation-duration: 4s;
+}
+@keyframes example {
+    from {background-color: transparent;}
+    to {background-color: yellow;}
+  }
+.wraper{
+    background-color: rgb(122, 117, 126);
+    max-width: 400px;
+    height: 80hv;
+    margin: 50px auto;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px greenyellow;
+    justify-content: center;
+    transition: width 2s, height 2s;
+}
+.wraper:hover{
+    height: 100hv;
+    max-width: 500px;
+
+}
+.wraper1{
+    display: none;
+}
+.wraper1{
+    background-color: rgb(122, 117, 126);
+    max-width: 400px;
+    height: 80hv;
+    margin: 50px auto;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px greenyellow;
+    justify-content: center;
+
+}
+.wraper h2{
+    text-align: center;
+}
+.wraper1 h2{
+    text-align: center;
+}
+.forminput{
+    margin: 100px;
+    transition: 1s ease-in ease-in-out;
+}
+.forminput input{
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+}
+.forminput button{
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #007bff;
+    transition: width 2s;
+}
+.forminput button:hover{
+    background-color: green;
+    width: 10px;
+}

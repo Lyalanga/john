@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup Toggle</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="respo.css">
+</head>
+<body>
+    
+    <i class='bx bx-toggle-right'></i>
+    <i class='bx bx-window-close'></i>
+    <i class='bx bx-show' ></i>
+    <div class="wraper" id="Loginform">
+        <h2>Login</h2>
+        <div class="forminput">
+            <label for="Username">Username</label><br>
+            <input type="text" name="Username" id="Username" placeholder="Username" required>
+        </div>
+        <div class="forminput">
+            <label for="Password">Password</label><br>
+            <input type="password" name="Password" id="Password" placeholder="Password" required>
+        </div>
+        <div class="forminput">
+            <button type="submit">Submit</button>
+            <div class="SignUp-link"><p>New account <a href="#" id="showSignUp">SignUp</a></p></div>
+        </div>
+    </div>
+
+    <div class="wraper1" id="SignUpform">
+        <h2>SignUp</h2>
+        <div class="forminput">
+            <label for="FullName">Full Name</label><br>
+            <input type="text" name="FullName" id="FullName" placeholder="Full Name" required>
+        </div>
+        <div class="forminput">
+            <label for="Email">Email</label><br>
+            <input type="email" name="Email" id="Email" placeholder="Email" required>
+        </div>
+        <div class="forminput">
+            <button type="submit">Sign Up</button>
+            <div class="login-link"><p>Already have an account? <a href="#" id="showLogin">Login</a></p></div>
+        </div>
+    </div>
+
+    <script src="respo.js"></script>
+</body>
+</html>
