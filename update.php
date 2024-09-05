@@ -1,98 +1,113 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "passenger_management";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $destination = $_POST['destination'];
+
+    $sql = "UPDATE passengers SET name='$name', email='$email', phone='$phone', destination='$destination' WHERE id=$id";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+} else {
+    $id = $_GET['id'];
+    $sql = "SELECT id, name, email, phone, destination FROM passengers WHERE id=$id";
+    $result = $conn->query($sql);
+    $passenger = $result->fetch_assoc();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Badilisha Taarifa za Mwanafunzi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Passenger</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
+            background-image: url(bg.jpg);
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
+            text-align: center;
             color: #333;
-        }
-        form {
-            width: 300px;
-            margin-top: 20px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin: 10px 0 5px;
+            color: #555;
         }
-        input[type="text"], input[type="email"] {
+        input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            box-sizing: border-box;
         }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
             border: none;
-            border-radius: 4px;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
+            border-radius: 4px;
         }
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    <h2>Badilisha Taarifa za Mwanafunzi</h2>
+    <div class="container">
+        <h2>Update Passenger</h2>
+        <form action="" method="POST">
+            <input type="hidden" name="id" value="<?php echo $passenger['id']; ?>">
 
-    <?php
-    include 'database.php';
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<?php echo $passenger['name']; ?>" required>
 
-    // Hakikisha kuwa ID ya mwanafunzi ipo ili kubadilisha
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<?php echo $passenger['email']; ?>" required>
 
-        // Chukua taarifa za mwanafunzi kwa kutumia ID yake
-        $sql = "SELECT * FROM students WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$id]);
-        $student = $stmt->fetch();
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" value="<?php echo $passenger['phone']; ?>" required>
 
-        if ($student) {
-            // Fomu ya kubadilisha taarifa
-            echo '
-            <form action="update.php" method="POST">
-                <input type="hidden" name="id" value="' . $student['id'] . '">
-                
-                <label for="full_name">Jina Kamili:</label>
-                <input type="text" name="full_name" value="' . $student['full_name'] . '" required>
-                
-                <label for="email">Barua pepe:</label>
-                <input type="email" name="email" value="' . $student['email'] . '" required>
-                
-                <label for="course">Kozi:</label>
-                <input type="text" name="course" value="' . $student['course'] . '" required>
-                
-                <input type="submit" value="Badilisha">
-            </form>
-            ';
-        } else {
-            echo "Mwanafunzi hajapatikana.";
-        }
-    } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Pokea taarifa zilizobadilishwa kutoka kwenye fomu
-        $id = $_POST['id'];
-        $full_name = $_POST['full_name'];
-        $email = $_POST['email'];
-        $course = $_POST['course'];
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" value="<?php echo $passenger['destination']; ?>" required>
 
-        // Hakikisha SQL inatumia alama za maswali sahihi na idadi yao inalingana
-        $sql = "UPDATE students SET full_name = ?, email = ?, course = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$full_name, $email, $course, $id]);
-
-        echo "Taarifa zimebadilishwa kwa mafanikio!";
-    } else {
-        echo "Hakuna ID ya mwanafunzi iliyotolewa!";
-    }
-    ?>
+            <button type="submit">Update Passenger</button>
+        </form>
+    </div>
 </body>
 </html>

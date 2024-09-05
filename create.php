@@ -1,94 +1,106 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "passenger_management";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $destination = $_POST['destination'];
+
+    $sql = "INSERT INTO passengers (name, email, phone, destination)
+            VALUES ('$name', '$email', '$phone', '$destination')";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sajili Mwanafunzi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Passenger</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
+            background-image: url(bg.jpg);
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
+            text-align: center;
             color: #333;
-        }
-        form {
-            width: 300px;
-            margin-top: 20px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin: 10px 0 5px;
+            color: #555;
         }
-        input[type="text"], input[type="email"] {
+        input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            box-sizing: border-box;
         }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .success-message {
-            margin-top: 20px;
-            color: #28a745;
-        }
-        .view-student {
-            display: inline-block;
-            margin-top: 10px;
-            background-color: #007bff;
             color: white;
-            padding: 10px 15px;
-            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
             border-radius: 4px;
         }
-        .view-student:hover {
-            background-color: #0056b3;
+        button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    <h2>Sajili Mwanafunzi Mpya</h2>
-    <form action="create.php" method="POST">
-        <label for="full_name">Jina Kamili:</label>
-        <input type="text" name="full_name" required>
-        
-        <label for="email">Barua pepe:</label>
-        <input type="email" name="email" required>
-        
-        <label for="course">Kozi:</label>
-        <input type="text" name="course" required>
-        
-        <input type="submit" value="Sajili">
-    </form>
+    <div class="container">
+        <h2>Create New Passenger</h2>
+        <form action="" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        include 'database.php';
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        $full_name = $_POST['full_name'];
-        $email = $_POST['email'];
-        $course = $_POST['course'];
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
 
-        $sql = "INSERT INTO students (full_name, email, course) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$full_name, $email, $course]);
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" required>
 
-        // Pata ID ya mwanafunzi mpya aliyesajiliwa
-        $student_id = $conn->lastInsertId();
-
-        echo "<div class='success-message'>Mwanafunzi amesajiliwa kwa mafanikio!</div>";
-        echo "<a class='view-student' href='view.php?id=" . $student_id . "'>Angalia Taarifa za Mwanafunzi</a>";
-    }
-    ?>
+            <button type="submit">Add Passenger</button>
+        </form>
+    </div>
 </body>
 </html>

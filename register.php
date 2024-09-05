@@ -1,55 +1,61 @@
 <?php
-include 'database.php'; // Jumuisha muunganisho wa database
+// Kuweka connection na database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "passenger_management";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Unda connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Angalia connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Kitendo cha Usajili
+if (isset($_POST['register'])) {
     $username = $_POST['username'];
-    $password = $_POST['password'];
-    $is_admin = isset($_POST['is_admin']) ? 1 : 0; // 1 ikiwa admin, 0 ikiwa mtumiaji wa kawaida
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    // Hash password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Chagua meza kulingana na ikiwa ni admin au mtumiaji
-    $table = $is_admin ? 'admins' : 'users';
-
-    try {
-        $sql = "INSERT INTO $table (username, password) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$username, $hashed_password]);
-
-        // Usajili umefanikiwa, elekeza moja kwa moja kwenye ukurasa wa login
-        header("Location: login.php");
-        exit();
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Registration successful!";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
+
+$conn->close(); // Funga connection baada ya shughuli kukamilika
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- HTML ya fomu ya usajili -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    <link rel="stylesheet" href="login.css"> <!-- Jumuisha CSS -->
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-image: url(bg.jpg); }
+        .container { max-width: 400px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2 { text-align: center; color: #333; }
+        label { display: block; margin: 10px 0 5px; }
+        input[type="text"], input[type="password"],input[type="email"] { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .btn { display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 4px; text-align: center; }
+        .btn:hover { background-color: #0056b3; }
+    </style>
+ </head>
+ <body>
     <div class="container">
-        <h2>Register</h2>
-        <form action="register.php" method="POST">
-            <label for="username">Jina la Mtumiaji:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Nenosiri:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="is_admin">
-                <input type="checkbox" id="is_admin" name="is_admin">
-                Ni Admin
-            </label>
-
-            <input type="submit" value="Jisajili">
-        </form>
-    </div>
+        <h2>Register Now</h2>
+<form method="post">
+    Username: <input type="text" name="username" required><br>
+    Email: <input type="email" name="email" required><br>
+    Password: <input type="password" name="password" required><br>
+    <button type="submit" name="register" class="btn">Register</button>
+</form><p><a href="login.php">Sign in</a></p>
+</div>
 </body>
 </html>

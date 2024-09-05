@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, name, email, phone, destination FROM passengers";
+$sql = "SELECT id, passenger_id, amount, payment_method FROM payments";
 $result = $conn->query($sql);
 ?>
 
@@ -21,7 +21,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passenger Management</title>
+    <title>Payment Record</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@ $result = $conn->query($sql);
             background-image: url(bg.jpg);
         }
         .container {
-            max-width: 810px;
+            max-width: 800px;
             margin: auto;
             background-color: #fff;
             padding: 20px;
@@ -76,29 +76,24 @@ $result = $conn->query($sql);
         .btn:hover {
             background-color: #0056b3;
         }
-        .H1{
-            color: blue;
-        }
     </style>
 </head>
-<body><h2><marquee behavior="" direction="" class="H1">WELCOME TO OUR SYSTEM TO BOOK THE BUS YOU WANT</marquee></h2>
+<body>
     <div class="container">
-        <h2>Passenger Management</h2>
+        <h2>Payment Record</h2>
         <!-- Navigation Links -->
-        <a href="create.php" class="btn">Add New Passenger</a>
+       <!--<a href="create.php" class="btn">Add New Passenger</a>
         <a href="payment.php" class="btn">Payment Form</a>
         <a href="register.php" class="btn">Registration Form</a>
-        <a href="login.php" class="btn">Login Form</a>
-        <a href="status.php" class="btn">Payment Records</a>
+        <a href="login.php" class="btn">Login Form</a>-->
         
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Destination</th>
-                    <th>Actions</th>
+                    <th>Passenger_id</th>
+                    <th>Amount</th>
+                    <th>Payment_method</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,18 +101,16 @@ $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>
-                                <td>{$row['name']}</td>
-                                <td>{$row['email']}</td>
-                                <td>{$row['phone']}</td>
-                                <td>{$row['destination']}</td>
+                                <td>{$row['passenger_id']}</td>
+                                <td>{$row['amount']}</td>
+                                <td>{$row['payment_method']}</td>
                                 <td>
-                                    <a href='update.php?id={$row['id']}'>Edit</a> |
-                                    <a href='delete.php?id={$row['id']}' class='btn btn-danger'>Delete</a>
+                                    <a href='deletep.php?id={$row['id']}' class='btn btn-danger'>Delete</a>
                                 </td>
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5'>No passengers found</td></tr>";
+                    echo "<tr><td colspan='5'>No record</td></tr>";
                 }
                 $conn->close();
                 ?>

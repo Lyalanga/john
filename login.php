@@ -1,73 +1,70 @@
 <?php
-session_start(); // Anza session
+session_start();
 
-include 'database.php'; // Jumuisha muunganisho wa database
+// Kuweka connection na database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "passenger_management";
 
-// Angalia kama form imewasilishwa
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Unda connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Angalia connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Kitendo cha Kuingia
+if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $role = $_POST['role']; // Pata thamani ya role kutoka kwenye form
 
-    try {
-        // Tafuta mtumiaji kwa jina la mtumiaji na role
-        $table = $role == 'admin' ? 'admins' : 'users'; // Chagua meza kulingana na role
-        $sql = "SELECT * FROM $table WHERE username = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$username]);
+    $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$username'";
+    $result = $conn->query($sql);
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($password, $user['password'])) {
-            // Anza session kwa mtumiaji aliyeingia
-            $_SESSION['user'] = $user;
-
-            if ($role == 'admin') {
-                header("Location: admin.php"); // Elekeza kwenye ukurasa wa admin
-            } else {
-                header("Location: user.php"); // Elekeza kwenye ukurasa wa user
-            }
-            exit();
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: test.html");
         } else {
-            // Nenosiri si sahihi au mtumiaji hayupo
-            $error = "Jina la mtumiaji au nenosiri si sahihi. Tafadhali jisajili.";
-            header("Location: register.php"); // Elekeza kwenye ukurasa wa usajili
-            exit();
+            echo "Incorrect password!";
         }
-    } catch (PDOException $e) {
-        $error = "Error: " . $e->getMessage();
+    } else {
+        echo "No user found with that username or email!";
     }
 }
+
+$conn->close(); // Funga connection baada ya shughuli kukamilika
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- HTML ya fomu ya kuingia -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="login.css"> <!-- Jumuisha CSS -->
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-image: url(bg.jpg); }
+        .container { max-width: 400px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2 { text-align: center; color: #333; }
+        label { display: block; margin: 10px 0 5px; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .btn { display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 4px; text-align: center; }
+        .btn:hover { background-color: #0056b3; }
+    </style>
+ </head>
+ <body>
     <div class="container">
         <h2>Login</h2>
-        <?php if (isset($error)): ?>
-        <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <form action="login.php" method="POST">
-            <label for="username">Jina la Mtumiaji:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Nenosiri:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="role">Login as:</label>
-            <select id="role" name="role" required>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
-
-            <input type="submit" value="Ingiza">
-        </form>
-    </div>
+<form method="post">
+    Username or Email: <input type="text" name="username" required><br>
+    Password: <input type="password" name="password" required><br>
+    <button type="submit" name="login" class="btn">Login</button>
+</form><p>Forgot Pssword <a href="register.php">SignUp</a></p>
+</div>
 </body>
 </html>

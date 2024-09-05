@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="search.css">
-    <title>Orodha Ya Wananchi</title>
+    <title>Bus Booking</title>
 </head>
 <body>
-    <h2>Orodha Ya Wananchi</h2>
+    <h2>Mabasi Ya Mikoani</h2>
 
     <!-- Search bar -->
     <input type="text" id="searchBar" onkeyup="tafutaKwenyeJedwali()" placeholder="Tafuta...">
@@ -16,114 +16,132 @@
     <table id="myTable" border="1">
         <thead>
             <tr>
-                <th>Jina</th>
-                <th>Umri</th>
-                <th>Anuani</th>
-                <th>Simu</th>
+                <th>Bus Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Starting-Arrival Time</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Juma Mkubwa</td>
-                <td>28</td>
-                <td>Dar es Salaam</td>
-                <td>0712345678</td>
+                <td>Marangu</td>
+                <td>Kahama</td>
+                <td>Moshi</td>
+                <td>6:00 AM-6:00PM</td>
+                <td>45000/=</td>
             </tr>
             <tr>
-                <td>Fatuma Shabani</td>
-                <td>25</td>
+                <td>Isamilo</td>
+                <td>Mwanza</td>
+                <td>Mbeya</td>
+                <td>6:00 AM-5:00 AM(Tomorrow)</td>
+                <td>75000/=</td>
+            </tr>
+            <tr>
+                <td>Premier</td>
+                <td>Mwnza</td>
+                <td>Arusha</td>
+                <td>6:00 AM-8:00PM</td>
+                <td>60000/=</td>
+            </tr>
+            <tr>
+                <td>Premier</td>
+                <td>Mwanza</td>
+                <td>Mbeya</td>
+                <td>6:00 AM-5:00 AM(Tomorrow)</td>
+                <td>75000/=</td>
+            </tr>
+            <tr>
+                <td>Isamilo</td>
+                <td>Mwanza</td>
+                <td>Moshi</td>
+                <td>6:00 AM-6:00 PM</td>
+                <td>60000/=</td>
+            </tr>
+            <tr>
+                <td>Achimwene</td>
+                <td>Mbeya</td>
+                <td>DSM</td>
+                <td>5:00 AM-00:00 AM</td>
+                <td>55000/=</td>
+            </tr>
+            <tr>
+                <td>Achimwene</td>
+                <td>Mbeya</td>
+                <td>Sumbawanga</td>
+                <td>7:00 AM-1:00 PM</td>
+                <td>15000/=</td>
+            </tr>
+            <tr>
+                <td>New Force</td>
+                <td>Mbeya</td>
+                <td>Moshi</td>
+                <td>6:00 AM-6:00 PM</td>
+                <td>45000/=</td>
+            </tr>
+            <tr>
+                <td>New Force</td>
+                <td>Mbeya</td>
+                <td>Mwanza</td>
+                <td>5:00 AM-4:00 AM(Tomorrow)</td>
+                <td>75000/=</td>
+            </tr>
+            <tr>
+                <td>New Force</td>
+                <td>Mbeya</td>
                 <td>Dodoma</td>
-                <td>0756789012</td>
+                <td>7:00 AM-8:00 PM</td>
+                <td>40000/=</td>
             </tr>
             <tr>
-                <td>Peter John</td>
-                <td>35</td>
+                <td>All's</td>
+                <td>Mbeya</td>
+                <td>Dodoma</td>
+                <td>8:00 AM-9:00 PM</td>
+                <td>40000/=</td>
+            </tr>
+            <tr>
+                <td>Achimwene</td>
+                <td>Mbeya</td>
+                <td>Songea</td>
+                <td>9:00 AM-4:00 PM</td>
+                <td>25000/=</td>
+            </tr>
+            <tr>
+                <td>True Best</td>
+                <td>Mbeya</td>
+                <td>Kigoma</td>
+                <td>5:00 AM-9:00 AM(Tomorrow)</td>
+                <td>80000/=</td>
+            </tr>
+            <tr>
+                <td>Saul</td>
+                <td>Mbeya</td>
+                <td>Tabora</td>
+                <td>6:00 AM-6:00 PM</td>
+                <td>35000/=</td>
+            </tr>
+            <tr>
+                <td>Super Feo</td>
                 <td>Arusha</td>
-                <td>0765432109</td>
-            </tr>
-            <tr>
-                <td>Mary Jane</td>
-                <td>30</td>
-                <td>Mwanza</td>
-                <td>0789012345</td>
-            </tr>
-            <tr>
-                <td>Hapiness Chenya</td>
-                <td>23</td>
                 <td>Simiyu</td>
-                <td>0789012345</td>
+                <td>6:00 AM-2:00 PM</td>
+                <td>20000/=</td>
             </tr>
             <tr>
-                <td>Jeremia Jackson</td>
-                <td>30</td>
-                <td>Mwanza</td>
-                <td>078902356</td>
-            </tr>
-            <tr>
-                <td>Isack Maroo</td>
-                <td>35</td>
-                <td>DSM</td>
-                <td>0714012345</td>
-            </tr>
-            <tr>
-                <td>Felix Kimaro</td>
-                <td>25</td>
-                <td>Arusha</td>
-                <td>062577831</td>
-            </tr>
-            <tr>
-                <td>Henry Magwaya</td>
-                <td>23</td>
-                <td>Mwanza</td>
-                <td>0614530067</td>
-            </tr>
-            <tr>
-                <td>Hemed Ikoki</td>
-                <td>24</td>
-                <td>DSM</td>
-                <td>0714012345</td>
-            </tr>
-            <tr>
-                <td>Zakayo Magulu</td>
-                <td>28</td>
-                <td>Geita</td>
-                <td>0714012388</td>
-            </tr>
-            <tr>
-                <td>Nelson Magamba</td>
-                <td>24</td>
-                <td>DSM</td>
-                <td>0714012345</td>
-            </tr>
-            <tr>
-                <td>Magambo Machimu</td>
-                <td>30</td>
-                <td>Shinyanga</td>
-                <td>0714612345</td>
-            </tr>
-            <tr>
-                <td>Eliud Samuel</td>
-                <td>24</td>
-                <td>DSM</td>
-                <td>0714012345</td>
-            </tr>
-            <tr>
-                <td>Zengo Mayombi</td>
-                <td>27</td>
-                <td>Simiyu</td>
-                <td>0654012345</td>
-            </tr>
-            <tr>
-                <td>Godson Reward</td>
-                <td>24</td>
+                <td>Super Feo</td>
+                <td>Mbeya</td>
                 <td>KILIMANJARO</td>
-                <td>0654012330</td>
+                <td>5:00 AM-5:00 PM</td>
+                <td>50000/=</td>
             </tr>
             <tr>
-                <td>Abel Sosoma</td>
-                <td>22</td>
-                <td>Simiyu</td>
-                <td>0684012359</td>
+                <td>Super Feo</td>
+                <td>Mbeya</td>
+                <td>DSM</td>
+                <td>6:00 AM-00:00 AM</td>
+                <td>55000/=</td>
             </tr>
         </tbody>
     </table>

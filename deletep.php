@@ -13,10 +13,10 @@ if ($conn->connect_error) {
 }
 
 $id = $_GET['id'];
-$sql = "DELETE FROM passengers WHERE id=$id";
+$sql = "DELETE FROM payments WHERE id=$id";
 
 if ($conn->query($sql) === TRUE) {
-    header("Location: index.php");
+    header("Location: status.php");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
